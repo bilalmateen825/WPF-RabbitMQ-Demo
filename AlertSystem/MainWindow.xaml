@@ -1,0 +1,77 @@
+﻿<Window x:Class="AlertSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlertSystem"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Margin="0 20 0 0" Grid.Row="0">
+            <Button x:Name="ConnectRabbitMQ" Click="ConnectRabbitMQ_Click" Height="30" Margin="0 10 30 0">Connect RabbitMQ</Button>
+            <Button x:Name="CreateExchange" Click="CreateExchange_Click" Height="30" Margin="0 10 30 0">Create Exchange</Button>
+            <Button x:Name="CreateBroadcastingExchange" Click="CreateBroadcastingExchange_Click" Height="30" Margin="0 10 30 0">Create Broadcasting Exchange</Button>
+            <Button x:Name="CreateQueues" Click="CreateQueues_Click" Height="30" Margin="0 10 30 0">Create Queues</Button>
+            <Button x:Name="BindQueue" Click="BindQueue_Click" Height="30" Margin="0 10 30 0">Bind Queue</Button>
+        </WrapPanel>
+
+        <WrapPanel Grid.Row="1" Margin="0 20 0 0">
+            <Label Height="40">Publish Email:</Label>
+            <TextBox Margin="10 0 0 0" Height="40" Width="300" x:Name="PublishEmailText"></TextBox>
+            <Button x:Name="btnPublishEmail"  Margin="10 0 0 0" Width="150" Height="25" Click="btnPublishEmail_Click">Submit</Button>
+            <Button x:Name="btnBroadcastEmail"  Margin="10 0 0 0" Width="150" Height="25" Click="btnBroadcastEmail_Click">Broadcast</Button>
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Margin="0 20 0 0">
+            <Label Height="40">Publish Sms:</Label>
+            <TextBox Margin="17 0 0 0" Height="40" Width="300" x:Name="PublishSmsText"></TextBox>
+            <Button x:Name="btnPublishSms" Margin="10 0 0 0" Width="150" Height="25" Click="btnPublishSms_Click">Submit</Button>
+            <Button x:Name="btnBroadcastSms" Margin="10 0 0 0" Width="150" Height="25" Click="btnBroadcastSms_Click">Broadcast</Button>
+        </WrapPanel>
+
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0 20 20 0">
+                <Button x:Name="EmailQueueSubscribe" Padding="1 1 1 1" Width="90" HorizontalAlignment="Left" Click="EmailQueueSubscribe_Click">Subscribe</Button>
+                <Grid>
+                    <DataGrid Name="grdEmail" AutoGenerateColumns="False" ItemsSource="{Binding LstEmailReceived}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PersonName}" />
+                            <DataGridTextColumn Header="Email Id" Binding="{Binding EmailId}" />
+                            <DataGridTextColumn Header="Message" Binding="{Binding Content}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="0 20 0 0">
+                <Button x:Name="SMSQueueSubscribe" Padding="1 1 1 1" Width="90" HorizontalAlignment="Left" Click="SMSQueueSubscribe_Click">Subscribe</Button>
+                <Grid>
+                    <DataGrid  Name="grdSMS"  AutoGenerateColumns="False" ItemsSource="{Binding LstSmsReceived}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding PersonName}" />
+                            <DataGridTextColumn Header="Cell No" Binding="{Binding CellNo}" />
+                            <DataGridTextColumn Header="Message" Binding="{Binding Content}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
